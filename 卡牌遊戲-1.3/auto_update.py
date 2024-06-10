@@ -35,10 +35,10 @@ def get_all_file_paths(directory: str, no_zip_files: list[str]=[]) -> list[str]:
 def zipped(zipped_file_name: str, no_zip_files: list[str]=[]) -> int: 
 
     file_paths = get_all_file_paths(FOLDER_PATH, no_zip_files)
-    
-    
+
+
     print('Following files will be zipped:')
-    for file_name in file_paths: 
+    for file_name in file_paths:
         print(file_name)
     
     with ZipFile(zipped_file_name+".zip",'w') as zip:
