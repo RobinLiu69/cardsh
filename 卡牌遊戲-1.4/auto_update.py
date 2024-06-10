@@ -5,7 +5,7 @@ from zipfile import ZipFile
 
 FOLDER_PATH = os.path.realpath(os.path.dirname(__file__))
 def check_project_info(name: str="更新日誌", time: int=1) -> tuple[str, str, str, str]:
-    with open(FOLDER_PATH+"/"+name+".txt", 'r', encoding='utf-8') as file:
+    with open(f"{FOLDER_PATH}/{name}.txt", 'r', encoding='utf-8') as file:
         texts = file.readlines()
         project_name = texts[0].split("-")[0]
         count = 0
@@ -41,7 +41,7 @@ def zipped(zipped_file_name: str, no_zip_files: list[str]=[]) -> int:
     for file_name in file_paths:
         print(file_name)
     
-    with ZipFile(zipped_file_name+".zip",'w') as zip:
+    with ZipFile(f"{zipped_file_name}.zip",'w') as zip:
         for file in file_paths: 
             zip.write(file) 
   
@@ -51,7 +51,7 @@ def zipped(zipped_file_name: str, no_zip_files: list[str]=[]) -> int:
 def change_folder_path_name(folder_name: str, project_name: str="None") -> int:
     if project_name == "None":
         project_name = FOLDER_PATH.split("/")[-1].split("-")[0]
-    destination = "/".join(FOLDER_PATH.split("/")[:-1:]) + "/" + project_name + "-" + folder_name
+    destination = f"{'/'.join(FOLDER_PATH.split('/')[:-1:])}/{project_name}-{folder_name}"
     if FOLDER_PATH == destination:
         print("Source and destination are the same.")
         return 0

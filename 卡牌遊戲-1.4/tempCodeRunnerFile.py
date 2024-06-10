@@ -1,0 +1,1 @@
+destination = f"{'/'.join(FOLDER_PATH.split('/')[:-1:])}/{project_name}-{folder_name}"

@@ -1,5 +1,7 @@
-import random
+import random, os
 from typing import Any, Iterable, Sequence, Collection
+
+FOLDER_PATH = os.path.realpath(os.path.dirname(__file__))
 
 def value_is_int(v: str) -> bool:
     return v.replace("-", "").isdigit() and v.count("-") <= 1 and (v.count("-") == 0 or v[0] == "-")
@@ -30,7 +32,7 @@ class Player():
         self.discard_pile: list[str] = []
 
     def load_deck(self) -> None:
-        with open(self.name+".txt", 'r', encoding='utf-8') as file:
+        with open(f"{FOLDER_PATH}/{self.name}.txt", 'r', encoding='utf-8') as file:
             self.deck = [line.strip() for line in file.readlines()]
         self.shuffle_pile.extend(self.deck)
         random.shuffle(self.shuffle_pile)
@@ -189,9 +191,9 @@ def main() -> int:
     
     try:
         player.load_deck()
-    except:
+    except FileNotFoundError:
         print("無法載入檔案\n(請確認你的角色名與檔名一樣)")
-        return -1
+        return 1
         
     
     while player.play_card(): pass
