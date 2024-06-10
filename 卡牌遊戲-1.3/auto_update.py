@@ -80,7 +80,7 @@ def main() -> int:
         rename()
     elif options.lower() == "zip":
         zip_file_name = FOLDER_PATH.split("/")[-1]
-        zipped(zip_file_name, [".git", ".mypy_cache"])
+        zipped(zip_file_name, [".git", ".mypy_cache", "__pycache__"])
     return 0
 
 
