@@ -13,8 +13,8 @@ def get_elements(lst: Sequence[Any], targets: Sequence[Any]) -> list[Any]:
     return list(filter(lambda x: x in targets, lst))
 
 def delete_elements(lst: list[Any], targets: Sequence[Any], start: int=0, end: int=-1, step: int=1) -> list[Any]:
-    deleteIdices = sorted(get_indices(lst[start:end:step], targets), reverse=True)
-    for i in deleteIdices:
+    delete_idices = sorted(get_indices(lst[start:end:step], targets), reverse=True)
+    for i in delete_idices:
         if step == -1:
             lst.pop(-1-i) 
         else:
