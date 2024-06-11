@@ -1,0 +1,3 @@
+{
+    "no_zip_files": [".git", ".mypy_cache", "__pycache__"]
+}

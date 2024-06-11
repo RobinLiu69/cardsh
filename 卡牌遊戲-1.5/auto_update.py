@@ -1,16 +1,17 @@
-import os
+import os, json
 from zipfile import ZipFile
 
 
 FOLDER_PATH = os.path.realpath(os.path.dirname(__file__))
+SETTING = json.loads(open("setting.json", "r").read())
 
-def check_project_info(name: str="更新日誌", time: int=1) -> tuple[str, str, str, str]:
+def get_project_info(name: str="更新日誌", time: int=1) -> tuple[str, str, str, str]:
     with open(f"{FOLDER_PATH}/{name}.txt", 'r', encoding='utf-8') as file:
         texts = file.readlines()
         project_name = texts[0].split("-")[0]
         count = 0
         for i in range(len(texts)-1, -1, -1):
-            if texts[i].replace("\n", "").count("=") > 15:
+            if texts[i].count("=") > 15:
                 count += 1
                 if count == time*2:
                     project_data, project_time, project_version = texts[i+1].replace("版本", "").replace("\n", "").split("-") 
@@ -25,7 +26,7 @@ def get_all_file_paths(directory: str, no_zip_files: list[str]=[]) -> list[str]:
   
     for root, directories, files in os.walk(directory): 
         for filename in files:
-            filepath = os.path.join(root, filename) 
+            filepath = os.path.join(root, filename)
             file_paths.append(filepath) 
 
     file_paths = list(filter(lambda path: not any((path for no_zip_file in no_zip_files if no_zip_file in path)), file_paths))
@@ -70,7 +71,7 @@ def change_folder_path_name(folder_name: str, project_name: str="None") -> int:
     return 1
 
 def rename() -> int:
-    project_name, project_data, project_time, project_version = check_project_info()
+    project_name, project_data, project_time, project_version = get_project_info()
     change_folder_path_name(project_version, project_name)
     return 0
 
@@ -80,7 +81,7 @@ def main() -> int:
         rename()
     elif options.lower() == "zip":
         zip_file_name = FOLDER_PATH.split("/")[-1]
-        zipped(zip_file_name, [".git", ".mypy_cache", "__pycache__"])
+        zipped(zip_file_name, SETTING["no_zip_files"])
     return 0
 
 
