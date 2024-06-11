@@ -29,7 +29,7 @@ def get_all_file_paths(directory: str, no_zip_files: list[str]=[]) -> list[str]:
             filepath = os.path.join(root, filename)
             file_paths.append(filepath) 
 
-    file_paths = list(filter(lambda path: not any((path for no_zip_file in no_zip_files if no_zip_file in path)), file_paths))
+    file_paths = list(filter(lambda path: not any(path for no_zip_file in no_zip_files if no_zip_file in path), file_paths))
 
     return file_paths
 
