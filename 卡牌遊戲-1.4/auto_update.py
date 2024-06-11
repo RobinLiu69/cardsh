@@ -2,8 +2,8 @@ import os
 from zipfile import ZipFile
 
 
-
 FOLDER_PATH = os.path.realpath(os.path.dirname(__file__))
+
 def check_project_info(name: str="更新日誌", time: int=1) -> tuple[str, str, str, str]:
     with open(f"{FOLDER_PATH}/{name}.txt", 'r', encoding='utf-8') as file:
         texts = file.readlines()
