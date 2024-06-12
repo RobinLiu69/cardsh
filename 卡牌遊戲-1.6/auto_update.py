@@ -1,4 +1,4 @@
-import os, json
+import os, json, shutil
 from zipfile import ZipFile
 
 
@@ -49,6 +49,20 @@ def zipped(zipped_file_name: str, no_zip_files: list[str]=[]) -> int:
     print('All files zipped successfully!')
     return 0
 
+def move_file(file_name: str, folder_name: str) -> int:
+    try:
+        shutil.move(f"{os.path.dirname(FOLDER_PATH)}/{file_name}",f"{os.path.dirname(FOLDER_PATH)}/{folder_name}/{file_name}")
+        return 0
+    except IsADirectoryError:
+        print("Source is a file but destination is a directory.")
+    except NotADirectoryError:
+        print("Source is a directory but destination is a file.")
+    except PermissionError:
+        print("Operation not permitted.")
+    except OSError as error:
+        print(error)
+    return 1
+
 def change_folder_path_name(folder_name: str, project_name: str="None") -> int:
     if project_name == "None":
         project_name = FOLDER_PATH.split("/")[-1].split("-")[0]
@@ -82,6 +96,7 @@ def main() -> int:
     elif options.lower() == "zip":
         zip_file_name = FOLDER_PATH.split("/")[-1]
         zipped(zip_file_name, SETTING["no_zip_files"])
+        move_file(f"{zip_file_name}.zip", SETTING["zip_file_save_to"])
     return 0
 
 
