@@ -3,9 +3,9 @@ from zipfile import ZipFile
 
 
 FOLDER_PATH = os.path.realpath(os.path.dirname(__file__))
-SETTING = json.loads(open("setting.json", "r").read())
+SETTING = json.loads(open(f"{FOLDER_PATH}/setting.json", "r").read())
 
-def get_project_info(name: str="更新日誌", time: int=1) -> tuple[str, str, str, str]:
+def get_project_info(name: str="更新日誌", time: int=0) -> tuple[str, str, str, str]:
     with open(f"{FOLDER_PATH}/{name}.txt", 'r', encoding='utf-8') as file:
         texts = file.readlines()
         project_name = texts[0].split("-")[0]
@@ -13,7 +13,7 @@ def get_project_info(name: str="更新日誌", time: int=1) -> tuple[str, str, s
         for i in range(len(texts)-1, -1, -1):
             if texts[i].count("=") > 15:
                 count += 1
-                if count == time*2:
+                if count == time+2:
                     project_data, project_time, project_version = texts[i+1].replace("版本", "").replace("\n", "").split("-") 
                     break
         else:
